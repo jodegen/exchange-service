@@ -34,4 +34,9 @@ public class ExchangeRateController {
     public List<ExchangeRateDto> getExchangeRateHistory(@PathVariable(name = "currencyCode") String currencyCode) {
         return exchangeRateService.getExchangeRateHistory(currencyCode);
     }
+
+    @PostMapping(path = "/register/{currencyCode}")
+    public void registerCurrency(@PathVariable(name = "currencyCode") String currencyCode) {
+        currencyReferenceService.registerCurrency(currencyCode);
+    }
 }

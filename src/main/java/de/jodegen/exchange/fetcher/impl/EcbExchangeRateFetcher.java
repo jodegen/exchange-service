@@ -44,15 +44,11 @@ public class EcbExchangeRateFetcher implements ExchangeRateFetcher {
                 .parse(new InputSource(new StringReader(xml)));
 
         NodeList cubeNodes = doc.getElementsByTagName("Cube");
-        LocalDate date = null;
         List<ExchangeRate> rates = new ArrayList<>();
 
         for (int i = 0; i < cubeNodes.getLength(); i++) {
             Element el = (Element) cubeNodes.item(i);
-            if (el.hasAttribute("time")) {
-                date = LocalDate.parse(el.getAttribute("time"));
-            }
-            if (el.hasAttribute("currency") && el.hasAttribute("rate") && date != null) {
+            if (el.hasAttribute("currency") && el.hasAttribute("rate")) {
                 String currencyCode = el.getAttribute("currency");
                 BigDecimal rate = new BigDecimal(el.getAttribute("rate"));
 

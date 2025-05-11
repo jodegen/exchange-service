@@ -5,9 +5,8 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class ExchangeRateDto {
     private String currencyCode;
     private BigDecimal rate;
