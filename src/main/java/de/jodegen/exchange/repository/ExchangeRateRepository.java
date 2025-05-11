@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.*;
 
-public interface ExchangeRateRepository extends JpaRepository<CurrencyReference, Long> {
+public interface ExchangeRateRepository extends JpaRepository<ExchangeRate, Long> {
 
     @Query("""
                 SELECT e FROM ExchangeRate e
