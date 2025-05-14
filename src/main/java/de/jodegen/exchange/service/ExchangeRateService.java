@@ -6,6 +6,7 @@ import de.jodegen.exchange.rest.model.ExchangeRateDto;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
+import java.math.*;
 import java.util.List;
 
 @Service
@@ -30,5 +31,17 @@ public class ExchangeRateService {
                 .stream()
                 .map(exchangeRateMapper::toDto)
                 .toList();
+    }
+
+    public BigDecimal convert(@NonNull String fromCurrency, @NonNull String toCurrency, @NonNull BigDecimal amount) {
+        if (fromCurrency.equalsIgnoreCase(toCurrency)) {
+            return amount;
+        }
+
+        BigDecimal fromRate = getExchangeRate(fromCurrency).getRate(); // EUR -> FROM
+        BigDecimal toRate = getExchangeRate(toCurrency).getRate();     // EUR -> TO
+
+        BigDecimal eurAmount = amount.multiply(fromRate);         // FROM → EUR
+        return eurAmount.divide(toRate, 6, RoundingMode.HALF_UP); // EUR → TO
     }
 }
