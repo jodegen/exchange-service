@@ -47,8 +47,10 @@ jobs:
 
             docker run -d \
               --name exchange-rate-service \
+              --network microservices-net \
               -p 4455:4455 \
               -e SPRING_PROFILES_ACTIVE=prod \
+              -e EUREKA_URL=${{ secrets.EUREKA_URL }} \
               -e DB_HOST=${{ secrets.DB_HOST }} \
               -e DB_DATABASE=${{ secrets.DB_DATABASE }} \
               -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
