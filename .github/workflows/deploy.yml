@@ -1,0 +1,49 @@
+name: Deploy Exchange Rate Service
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: jodegen
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/jodegen/exchange-rate-service:latest
+
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker pull ghcr.io/jodegen/exchange-rate-service:latest
+
+            docker stop exchange-rate-service || true
+            docker rm exchange-rate-service || true
+
+            docker run -d \
+              --name exchange-rate-service \
+              -p 8080:8080 \
+              -e SPRING_PROFILES_ACTIVE=prod \
+              -v /opt/microservices/exchange-rate-service:/app/data \
+              ghcr.io/jodegen/exchange-rate-service:latest
