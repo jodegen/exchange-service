@@ -11,4 +11,13 @@ public class ExchangeRateDto {
     private String currencyCode;
     private BigDecimal rate;
     private LocalDateTime timestamp;
+
+    // TODO: Remove when Annotation Processing is fixed
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
 }

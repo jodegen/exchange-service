@@ -26,4 +26,8 @@ public class ExchangeRate {
 
     @Column(name = "date", nullable = false)
     private LocalDateTime timestamp;
+
+    public CurrencyReference getReference() {
+        return reference;
+    }
 }

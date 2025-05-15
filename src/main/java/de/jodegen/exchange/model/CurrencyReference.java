@@ -23,4 +23,8 @@ public class CurrencyReference {
     public CurrencyReference(String code) {
         this.code = code;
     }
+
+    public String getCode() {
+        return code;
+    }
 }
