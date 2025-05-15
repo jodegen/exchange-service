@@ -38,6 +38,8 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u jodegen --password-stdin
+
             docker pull ghcr.io/jodegen/exchange-rate-service:latest
 
             docker stop exchange-rate-service || true
