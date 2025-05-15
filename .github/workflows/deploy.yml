@@ -51,7 +51,7 @@ jobs:
               -e SPRING_PROFILES_ACTIVE=prod \
               -e DB_HOST=${{ secrets.DB_HOST }} \
               -e DB_DATABASE=${{ secrets.DB_DATABASE }} \
-              -e DB_USER=${{ secrets.DB_USER }} \
+              -e DB_USER=${{ secrets.DB_USERNAME }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -v /opt/microservices/exchange-rate-service:/app/data \
               ghcr.io/jodegen/exchange-rate-service:latest
