@@ -47,7 +47,7 @@ jobs:
 
             docker run -d \
               --name exchange-rate-service \
-              -p 8080:8080 \
+              -p 4455:4455 \
               -e SPRING_PROFILES_ACTIVE=prod \
               -v /opt/microservices/exchange-rate-service:/app/data \
               ghcr.io/jodegen/exchange-rate-service:latest
